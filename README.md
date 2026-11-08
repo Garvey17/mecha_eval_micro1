@@ -24,7 +24,7 @@ While frontier LLMs can fluently write kinematic transformations and recite text
 ## 2. Video Walkthrough Link
 
 📺 **Watch the Walkthrough Video:**  
-**[Loom Video Walkthrough](https://www.loom.com/share/4a7775c6db384a9f8ec863a9e400ecb8)**
+**[Loom Video Walkthrough](https://www.loom.com/share/75382d9aa4e44e759014605168558a83)**
 
 ---
 
