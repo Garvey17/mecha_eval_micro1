@@ -1,0 +1,285 @@
+{
+  "model": "gpt-4o",
+  "total_tasks": 6,
+  "passed_tasks": 0,
+  "pass_rate_pct": 0.0,
+  "avg_precision_score": 0.4733,
+  "details": [
+    {
+      "json_valid": true,
+      "score": 0.67,
+      "passed_all": false,
+      "metrics": {
+        "peak_torque": {
+          "expected": 0.1941,
+          "predicted": 0.035294,
+          "rel_error": 0.8182,
+          "passed": false
+        },
+        "rms_torque": {
+          "expected": 0.0551,
+          "predicted": 0.0314,
+          "rel_error": 0.4301,
+          "passed": false
+        },
+        "derating_factor": {
+          "expected": 1.0,
+          "predicted": 1.0,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "derated_continuous_limit": {
+          "expected": 0.25,
+          "predicted": 0.25,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "optimal_gear_ratio": {
+          "expected": 21.91,
+          "predicted": 21.9,
+          "rel_error": 0.0005,
+          "passed": true
+        },
+        "thermal_overload": {
+          "expected": false,
+          "predicted": false,
+          "passed": true
+        }
+      },
+      "task_id": "task_001_rotor_inertia_trap",
+      "category": "rotor_inertia",
+      "latency_sec": 7.97,
+      "raw_response": "To solve this problem, we need to calculate several parameters step-by-step. Let's go through each calculation:\n\n### 1. Required Peak Motor Shaft Torque\n\nThe peak motor shaft torque during acceleration can be calculated using the formula:\n\n\\[\nT_{\\text{peak}} = \\frac{J_{\\text{eq}} \\cdot \\alpha}{N \\cdot \\eta}\n\\]\n\nWhere:\n- \\( J_{\\text{eq}} = J_L + \\frac{J_m}{N^2} \\) is the equivalent inertia reflected to the motor shaft.\n- \\( \\alpha = 100.0 \\, \\text{rad/s}^2 \\) is the required load acceleration.\n- \\( N = 40.0 \\) is the gearbox reduction ratio.\n- \\( \\eta = 0.85 \\) is the gearbox mechanical efficiency.\n\nFirst, calculate the equivalent inertia:\n\n\\[\nJ_{\\text{eq}} = 0.012 + \\frac{0.000025}{40^2} = 0.012 + 0.000000015625 = 0.012000015625 \\, \\text{kg*m}^2\n\\]\n\nNow, calculate the peak torque:\n\n\\[\nT_{\\text{peak}} = \\frac{0.012000015625 \\cdot 100}{40 \\cdot 0.85} = \\frac{1.2000015625}{34} \\approx 0.035294 \\, \\text{N*m}\n\\]\n\n### 2. Required Continuous RMS Motor Shaft Torque\n\nThe RMS torque is calculated over the entire cycle:\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{1}{T} \\left( \\int_0^{t_1} T_{\\text{acc}}^2 \\, dt + \\int_{t_1}^{t_2} T_{\\text{const}}^2 \\, dt + \\int_{t_2}^{t_3} T_{\\text{dec}}^2 \\, dt \\right)}\n\\]\n\nWhere:\n- \\( T_{\\text{acc}} = T_{\\text{peak}} \\)\n- \\( T_{\\text{const}} = \\frac{T_{\\text{load}}}{N \\cdot \\eta} = \\frac{2.0}{40 \\cdot 0.85} = 0.058824 \\, \\text{N*m} \\)\n- \\( T_{\\text{dec}} = T_{\\text{peak}} \\)\n- \\( T = 0.1 + 0.5 + 0.1 + 1.3 = 2.0 \\, \\text{s} \\)\n\nCalculate the RMS torque:\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{1}{2.0} \\left( 0.1 \\cdot 0.035294^2 + 0.5 \\cdot 0.058824^2 + 0.1 \\cdot 0.035294^2 \\right)}\n\\]\n\n\\[\n= \\sqrt{\\frac{1}{2.0} \\left( 0.1 \\cdot 0.001245 + 0.5 \\cdot 0.003460 + 0.1 \\cdot 0.001245 \\right)}\n\\]\n\n\\[\n= \\sqrt{\\frac{1}{2.0} \\left( 0.0001245 + 0.00173 + 0.0001245 \\right)}\n\\]\n\n\\[\n= \\sqrt{\\frac{0.001979}{2.0}} \\approx 0.0314 \\, \\text{N*m}\n\\]\n\n### 3. Ambient Temperature Derating Factor \\( k_{\\text{thermal}} \\)\n\nSince the operating ambient temperature is 25\u00b0C, which is the nominal temperature, the derating factor is 1.0.\n\n### 4. Derated Motor Continuous Torque Limit\n\nThe derated motor continuous torque limit is:\n\n\\[\nT_{\\text{derated}} = T_{\\text{nominal}} \\cdot k_{\\text{thermal}} = 0.25 \\cdot 1.0 = 0.25 \\, \\text{N*m}\n\\]\n\n### 5. Ideal Gear Ratio \\( N_{\\text{opt}} \\) for Maximum Inertia Matching\n\nThe optimal gear ratio for inertia matching is:\n\n\\[\nN_{\\text{opt}} = \\sqrt{\\frac{J_L}{J_m}} = \\sqrt{\\frac{0.012}{0.000025}} = \\sqrt{480} \\approx 21.9\n\\]\n\n### 6. Determination: Will the Motor Thermally Overheat?\n\nCompare the RMS torque with the derated continuous torque limit:\n\n- \\( T_{\\text{rms}} = 0.0314 \\, \\text{N*m} \\)\n- \\( T_{\\text{derated}} = 0.25 \\, \\text{N*m} \\)\n\nSince \\( T_{\\text{rms}} < T_{\\text{derated}} \\), the motor will not thermally overheat.\n\n### Final Calculated Values\n\n```json\n{\n  \"peak_torque\": 0.035294,\n  \"rms_torque\": 0.0314,\n  \"derating_factor\": 1.0,\n  \"derated_continuous_limit\": 0.25,\n  \"optimal_gear_ratio\": 21.9,\n  \"thermal_overload\": \"No\"\n}\n```"
+    },
+    {
+      "json_valid": true,
+      "score": 0.5,
+      "passed_all": false,
+      "metrics": {
+        "peak_torque": {
+          "expected": 0.2939,
+          "predicted": 0.0417,
+          "rel_error": 0.8581,
+          "passed": false
+        },
+        "rms_torque": {
+          "expected": 0.2022,
+          "predicted": 0.1623,
+          "rel_error": 0.1973,
+          "passed": false
+        },
+        "derating_factor": {
+          "expected": 1.0,
+          "predicted": 1.0,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "derated_continuous_limit": {
+          "expected": 0.19,
+          "predicted": 0.19,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "optimal_gear_ratio": {
+          "expected": 22.36,
+          "predicted": 22.36,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "thermal_overload": {
+          "expected": true,
+          "predicted": false,
+          "passed": false
+        }
+      },
+      "task_id": "task_002_duty_cycle_thermal_stress",
+      "category": "rms_thermal_trap",
+      "latency_sec": 7.99,
+      "raw_response": "To solve this problem, we need to calculate several parameters step-by-step. Let's go through each calculation:\n\n### 1. Required Peak Motor Shaft Torque\n\nThe peak torque required at the motor shaft during acceleration can be calculated using the formula:\n\n\\[\nT_{\\text{peak}} = \\frac{J_{\\text{eq}} \\cdot \\alpha}{N \\cdot \\eta}\n\\]\n\nWhere:\n- \\( J_{\\text{eq}} = J_L + \\frac{J_m}{N^2} \\) is the equivalent inertia reflected to the motor shaft.\n- \\( \\alpha = 150.0 \\, \\text{rad/s}^2 \\) is the required load acceleration.\n- \\( N = 20.0 \\) is the gearbox reduction ratio.\n- \\( \\eta = 0.9 \\) is the gearbox mechanical efficiency.\n\nFirst, calculate the equivalent inertia:\n\n\\[\nJ_{\\text{eq}} = 0.005 + \\frac{0.000010}{20^2} = 0.005 + 0.000000025 = 0.005000025 \\, \\text{kg*m}^2\n\\]\n\nNow, calculate the peak torque:\n\n\\[\nT_{\\text{peak}} = \\frac{0.005000025 \\cdot 150.0}{20 \\cdot 0.9} = \\frac{0.75000375}{18} = 0.041666875 \\, \\text{N*m}\n\\]\n\n### 2. Required Continuous RMS Motor Shaft Torque\n\nThe RMS torque is calculated over one complete cycle of operation. The cycle consists of acceleration, constant speed, deceleration, and rest phases.\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{1}{T} \\left( T_{\\text{acc}}^2 \\cdot t_{\\text{acc}} + T_{\\text{const}}^2 \\cdot t_{\\text{const}} + T_{\\text{dec}}^2 \\cdot t_{\\text{dec}} + T_{\\text{rest}}^2 \\cdot t_{\\text{rest}} \\right)}\n\\]\n\nWhere:\n- \\( T = 0.2 + 0.8 + 0.2 + 0.3 = 1.5 \\, \\text{s} \\) is the total cycle time.\n- \\( T_{\\text{acc}} = T_{\\text{peak}} \\)\n- \\( T_{\\text{const}} = \\frac{T_{\\text{load}}}{N \\cdot \\eta} = \\frac{4.0}{20 \\cdot 0.9} = 0.2222 \\, \\text{N*m} \\)\n- \\( T_{\\text{dec}} = T_{\\text{peak}} \\) (assuming symmetric acceleration and deceleration)\n- \\( T_{\\text{rest}} = 0 \\, \\text{N*m} \\)\n\nCalculate the RMS torque:\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{1}{1.5} \\left( (0.041666875)^2 \\cdot 0.2 + (0.2222)^2 \\cdot 0.8 + (0.041666875)^2 \\cdot 0.2 + 0^2 \\cdot 0.3 \\right)}\n\\]\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{1}{1.5} \\left( 0.000001736 \\cdot 0.2 + 0.04938272 \\cdot 0.8 + 0.000001736 \\cdot 0.2 \\right)}\n\\]\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{1}{1.5} \\left( 0.0000003472 + 0.039506176 + 0.0000003472 \\right)}\n\\]\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{0.0395068704}{1.5}} = \\sqrt{0.0263379136} = 0.1623 \\, \\text{N*m}\n\\]\n\n### 3. Ambient Temperature Derating Factor \\( k_{\\text{thermal}} \\)\n\nThe derating factor is calculated based on the difference between the maximum allowable winding temperature and the ambient temperature:\n\n\\[\nk_{\\text{thermal}} = \\frac{130.0 - 25.0}{130.0 - 25.0} = 1.0\n\\]\n\n### 4. Derated Motor Continuous Torque Limit\n\nThe derated continuous torque limit is:\n\n\\[\nT_{\\text{derated}} = T_{\\text{nominal}} \\cdot k_{\\text{thermal}} = 0.19 \\cdot 1.0 = 0.19 \\, \\text{N*m}\n\\]\n\n### 5. Ideal Gear Ratio \\( N_{\\text{opt}} \\)\n\nThe optimal gear ratio for maximum inertia matching is:\n\n\\[\nN_{\\text{opt}} = \\sqrt{\\frac{J_L}{J_m}} = \\sqrt{\\frac{0.005}{0.000010}} = \\sqrt{500} \\approx 22.36\n\\]\n\n### 6. Determination: Will the motor thermally overheat?\n\nCompare the RMS torque with the derated continuous torque limit:\n\n- \\( T_{\\text{rms}} = 0.1623 \\, \\text{N*m} \\)\n- \\( T_{\\text{derated}} = 0.19 \\, \\text{N*m} \\)\n\nSince \\( T_{\\text{rms}} < T_{\\text{derated}} \\), the motor will not thermally overheat.\n\n### Final Calculated Values\n\n```json\n{\n  \"peak_torque\": 0.0417,\n  \"rms_torque\": 0.1623,\n  \"derating_factor\": 1.0,\n  \"derated_continuous_limit\": 0.19,\n  \"optimal_gear_ratio\": 22.36,\n  \"thermal_overload\": \"No\"\n}\n```"
+    },
+    {
+      "json_valid": true,
+      "score": 0.33,
+      "passed_all": false,
+      "metrics": {
+        "peak_torque": {
+          "expected": 0.25,
+          "predicted": 0.0291,
+          "rel_error": 0.8836,
+          "passed": false
+        },
+        "rms_torque": {
+          "expected": 0.1434,
+          "predicted": 0.1241,
+          "rel_error": 0.1346,
+          "passed": false
+        },
+        "derating_factor": {
+          "expected": 0.7868,
+          "predicted": 0.619,
+          "rel_error": 0.2133,
+          "passed": false
+        },
+        "derated_continuous_limit": {
+          "expected": 0.1259,
+          "predicted": 0.099,
+          "rel_error": 0.2137,
+          "passed": false
+        },
+        "optimal_gear_ratio": {
+          "expected": 23.09,
+          "predicted": 23.09,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "thermal_overload": {
+          "expected": true,
+          "predicted": true,
+          "passed": true
+        }
+      },
+      "task_id": "task_003_ambient_thermal_derating",
+      "category": "ambient_temp_trap",
+      "latency_sec": 7.0,
+      "raw_response": "To solve this problem, we need to calculate several parameters step-by-step. Let's go through each calculation:\n\n### 1. Required Peak Motor Shaft Torque\n\nThe peak torque required at the motor shaft during acceleration can be calculated using the formula:\n\n\\[\nT_{\\text{peak}} = \\frac{J_{\\text{eq}} \\cdot \\alpha}{N \\cdot \\eta}\n\\]\n\nWhere:\n- \\( J_{\\text{eq}} = J_L + \\frac{J_m}{N^2} \\) is the equivalent inertia reflected to the motor shaft.\n- \\( \\alpha \\) is the required load acceleration.\n- \\( N \\) is the gearbox reduction ratio.\n- \\( \\eta \\) is the gearbox mechanical efficiency.\n\nFirst, calculate the equivalent inertia:\n\n\\[\nJ_{\\text{eq}} = 0.008 + \\frac{0.000015}{25^2} = 0.008 + 0.000000024 = 0.008000024 \\, \\text{kg*m}^2\n\\]\n\nNow, calculate the peak torque:\n\n\\[\nT_{\\text{peak}} = \\frac{0.008000024 \\cdot 80}{25 \\cdot 0.88} = \\frac{0.64000192}{22} \\approx 0.029090996 \\, \\text{N*m}\n\\]\n\n### 2. Required Continuous RMS Motor Shaft Torque\n\nThe RMS torque is calculated over one complete cycle of operation. The cycle consists of acceleration, constant speed, deceleration, and rest phases.\n\nThe RMS torque is given by:\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{1}{T} \\left( T_{\\text{acc}}^2 \\cdot t_{\\text{acc}} + T_{\\text{const}}^2 \\cdot t_{\\text{const}} + T_{\\text{dec}}^2 \\cdot t_{\\text{dec}} \\right)}\n\\]\n\nWhere:\n- \\( T = t_{\\text{acc}} + t_{\\text{const}} + t_{\\text{dec}} + t_{\\text{rest}} \\)\n- \\( T_{\\text{acc}} = T_{\\text{peak}} \\)\n- \\( T_{\\text{const}} = \\frac{T_{\\text{load}}}{N \\cdot \\eta} \\)\n- \\( T_{\\text{dec}} = T_{\\text{peak}} \\)\n\nCalculate \\( T_{\\text{const}} \\):\n\n\\[\nT_{\\text{const}} = \\frac{4.2}{25 \\cdot 0.88} = \\frac{4.2}{22} \\approx 0.190909091 \\, \\text{N*m}\n\\]\n\nNow calculate \\( T_{\\text{rms}} \\):\n\n\\[\nT = 0.15 + 0.8 + 0.15 + 0.9 = 2.0 \\, \\text{s}\n\\]\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{1}{2.0} \\left( (0.029090996)^2 \\cdot 0.15 + (0.190909091)^2 \\cdot 0.8 + (0.029090996)^2 \\cdot 0.15 \\right)}\n\\]\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{1}{2.0} \\left( 0.000846 + 0.029091 + 0.000846 \\right)}\n\\]\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{0.030783}{2.0}} \\approx \\sqrt{0.0153915} \\approx 0.124078 \\, \\text{N*m}\n\\]\n\n### 3. Ambient Temperature Derating Factor \\( k_{\\text{thermal}} \\)\n\nThe derating factor is calculated as:\n\n\\[\nk_{\\text{thermal}} = \\frac{T_{\\text{max}} - T_{\\text{ambient}}}{T_{\\text{max}} - T_{\\text{baseline}}}\n\\]\n\n\\[\nk_{\\text{thermal}} = \\frac{130 - 65}{130 - 25} = \\frac{65}{105} \\approx 0.619\n\\]\n\n### 4. Derated Motor Continuous Torque Limit\n\nThe derated continuous torque limit is:\n\n\\[\nT_{\\text{derated}} = T_{\\text{nominal}} \\cdot k_{\\text{thermal}}\n\\]\n\n\\[\nT_{\\text{derated}} = 0.16 \\cdot 0.619 \\approx 0.09904 \\, \\text{N*m}\n\\]\n\n### 5. Ideal Gear Ratio \\( N_{\\text{opt}} \\)\n\nThe optimal gear ratio for maximum inertia matching is:\n\n\\[\nN_{\\text{opt}} = \\sqrt{\\frac{J_L}{J_m}}\n\\]\n\n\\[\nN_{\\text{opt}} = \\sqrt{\\frac{0.008}{0.000015}} \\approx \\sqrt{533.333} \\approx 23.09\n\\]\n\n### 6. Determination: Will the motor thermally overheat?\n\nCompare \\( T_{\\text{rms}} \\) with \\( T_{\\text{derated}} \\):\n\nSince \\( T_{\\text{rms}} \\approx 0.124078 \\, \\text{N*m} \\) is greater than \\( T_{\\text{derated}} \\approx 0.09904 \\, \\text{N*m} \\), the motor will thermally overheat.\n\n### Final Calculated Values\n\n```json\n{\n  \"peak_torque\": 0.0291,\n  \"rms_torque\": 0.1241,\n  \"derating_factor\": 0.619,\n  \"derated_continuous_limit\": 0.099,\n  \"optimal_gear_ratio\": 23.09,\n  \"thermal_overload\": \"Yes\"\n}\n```"
+    },
+    {
+      "json_valid": true,
+      "score": 0.5,
+      "passed_all": false,
+      "metrics": {
+        "peak_torque": {
+          "expected": 0.8306,
+          "predicted": 0.2500028,
+          "rel_error": 0.699,
+          "passed": false
+        },
+        "rms_torque": {
+          "expected": 0.4116,
+          "predicted": 0.3083,
+          "rel_error": 0.251,
+          "passed": false
+        },
+        "derating_factor": {
+          "expected": 1.0,
+          "predicted": 1.0,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "derated_continuous_limit": {
+          "expected": 0.4,
+          "predicted": 0.4,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "optimal_gear_ratio": {
+          "expected": 30.0,
+          "predicted": 30,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "thermal_overload": {
+          "expected": true,
+          "predicted": false,
+          "passed": false
+        }
+      },
+      "task_id": "task_004_optimal_inertia_matching",
+      "category": "inertia_mismatch",
+      "latency_sec": 6.26,
+      "raw_response": "To solve this problem, we need to calculate several values step-by-step. Let's go through each calculation:\n\n### 1. Required Peak Motor Shaft Torque\n\nThe peak motor shaft torque during acceleration can be calculated using the formula:\n\n\\[\nT_{\\text{peak}} = \\frac{J_{\\text{eq}} \\cdot \\alpha}{N \\cdot \\eta}\n\\]\n\nWhere:\n- \\( J_{\\text{eq}} = J_L + \\frac{J_m}{N^2} \\) is the equivalent inertia reflected to the motor shaft.\n- \\( \\eta \\) is the gearbox mechanical efficiency.\n\nFirst, calculate the equivalent inertia:\n\n\\[\nJ_{\\text{eq}} = 0.045 + \\frac{0.000050}{10^2} = 0.045 + 0.0000005 = 0.0450005 \\, \\text{kg*m}^2\n\\]\n\nNow, calculate the peak torque:\n\n\\[\nT_{\\text{peak}} = \\frac{0.0450005 \\cdot 50}{10 \\cdot 0.9} = \\frac{2.250025}{9} = 0.2500028 \\, \\text{N*m}\n\\]\n\n### 2. Required Continuous RMS Motor Shaft Torque\n\nThe RMS torque is calculated over the entire cycle:\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{1}{T} \\left( T_{\\text{acc}}^2 \\cdot t_{\\text{acc}} + T_{\\text{const}}^2 \\cdot t_{\\text{const}} + T_{\\text{dec}}^2 \\cdot t_{\\text{dec}} \\right)}\n\\]\n\nWhere:\n- \\( T = t_{\\text{acc}} + t_{\\text{const}} + t_{\\text{dec}} + t_{\\text{rest}} = 0.2 + 0.6 + 0.2 + 1.0 = 2.0 \\, \\text{s} \\)\n- \\( T_{\\text{acc}} = T_{\\text{peak}} \\)\n- \\( T_{\\text{const}} = \\frac{T_{\\text{load}}}{N \\cdot \\eta} = \\frac{5.0}{10 \\cdot 0.9} = 0.5556 \\, \\text{N*m} \\)\n- \\( T_{\\text{dec}} = T_{\\text{peak}} \\)\n\nCalculate the RMS torque:\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{1}{2.0} \\left( (0.2500028)^2 \\cdot 0.2 + (0.5556)^2 \\cdot 0.6 + (0.2500028)^2 \\cdot 0.2 \\right)}\n\\]\n\n\\[\n= \\sqrt{\\frac{1}{2.0} \\left( 0.0125 \\cdot 0.2 + 0.3086 \\cdot 0.6 + 0.0125 \\cdot 0.2 \\right)}\n\\]\n\n\\[\n= \\sqrt{\\frac{1}{2.0} \\left( 0.0025 + 0.18516 + 0.0025 \\right)}\n\\]\n\n\\[\n= \\sqrt{\\frac{0.19016}{2.0}} = \\sqrt{0.09508} = 0.3083 \\, \\text{N*m}\n\\]\n\n### 3. Ambient Temperature Derating Factor \\( k_{\\text{thermal}} \\)\n\nSince the ambient temperature is 25\u00b0C, which is the nominal temperature, the derating factor is 1.0.\n\n### 4. Derated Motor Continuous Torque Limit\n\nThe derated continuous torque limit is:\n\n\\[\nT_{\\text{derated}} = T_{\\text{nominal}} \\cdot k_{\\text{thermal}} = 0.40 \\cdot 1.0 = 0.40 \\, \\text{N*m}\n\\]\n\n### 5. Ideal Gear Ratio \\( N_{\\text{opt}} \\) for Maximum Inertia Matching\n\nThe optimal gear ratio for inertia matching is:\n\n\\[\nN_{\\text{opt}} = \\sqrt{\\frac{J_L}{J_m}} = \\sqrt{\\frac{0.045}{0.000050}} = \\sqrt{900} = 30\n\\]\n\n### 6. Determination: Will the Motor Thermally Overheat?\n\nCompare the RMS torque with the derated continuous torque limit:\n\n- \\( T_{\\text{rms}} = 0.3083 \\, \\text{N*m} \\)\n- \\( T_{\\text{derated}} = 0.40 \\, \\text{N*m} \\)\n\nSince \\( T_{\\text{rms}} < T_{\\text{derated}} \\), the motor will not thermally overheat.\n\n### Final JSON Output\n\n```json\n{\n  \"peak_torque\": 0.2500028,\n  \"rms_torque\": 0.3083,\n  \"derating_factor\": 1.0,\n  \"derated_continuous_limit\": 0.40,\n  \"optimal_gear_ratio\": 30,\n  \"thermal_overload\": \"No\"\n}\n```"
+    },
+    {
+      "json_valid": true,
+      "score": 0.67,
+      "passed_all": false,
+      "metrics": {
+        "peak_torque": {
+          "expected": 0.1647,
+          "predicted": 0.13937,
+          "rel_error": 0.1538,
+          "passed": false
+        },
+        "rms_torque": {
+          "expected": 0.0733,
+          "predicted": 0.05873,
+          "rel_error": 0.1988,
+          "passed": false
+        },
+        "derating_factor": {
+          "expected": 1.0,
+          "predicted": 1.0,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "derated_continuous_limit": {
+          "expected": 0.15,
+          "predicted": 0.15,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "optimal_gear_ratio": {
+          "expected": 15.81,
+          "predicted": 15.81,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "thermal_overload": {
+          "expected": false,
+          "predicted": false,
+          "passed": true
+        }
+      },
+      "task_id": "task_005_back_emf_voltage_limit",
+      "category": "electrical_voltage_saturation",
+      "latency_sec": 6.8,
+      "raw_response": "To solve this problem, we need to calculate several parameters related to the actuator system. Let's go through each step:\n\n### Step 1: Required Peak Motor Shaft Torque\n\nThe peak motor shaft torque during acceleration can be calculated using the formula:\n\n\\[\nT_{\\text{peak}} = \\left( J_L \\cdot \\alpha \\right) / N + \\left( J_m \\cdot \\alpha \\right) + \\left( \\frac{T_{\\text{load}}}{N \\cdot \\eta} \\right)\n\\]\n\nWhere:\n- \\( J_L \\) is the load inertia.\n- \\( \\alpha \\) is the required load acceleration.\n- \\( N \\) is the gearbox reduction ratio.\n- \\( J_m \\) is the motor rotor inertia.\n- \\( T_{\\text{load}} \\) is the constant speed phase load torque.\n- \\( \\eta \\) is the gearbox mechanical efficiency.\n\nSubstituting the given values:\n\n\\[\nT_{\\text{peak}} = \\left( 0.002 \\cdot 200 \\right) / 15 + \\left( 0.000008 \\cdot 200 \\right) + \\left( \\frac{1.5}{15 \\cdot 0.9} \\right)\n\\]\n\n\\[\nT_{\\text{peak}} = 0.02667 + 0.0016 + 0.1111 = 0.13937 \\, \\text{N*m}\n\\]\n\n### Step 2: Required Continuous RMS Motor Shaft Torque\n\nThe RMS torque is calculated over the entire cycle:\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{1}{T_{\\text{total}}} \\left( T_{\\text{acc}}^2 \\cdot t_{\\text{acc}} + T_{\\text{const}}^2 \\cdot t_{\\text{const}} + T_{\\text{dec}}^2 \\cdot t_{\\text{dec}} \\right)}\n\\]\n\nWhere:\n- \\( T_{\\text{acc}} = T_{\\text{peak}} \\)\n- \\( T_{\\text{const}} = \\frac{T_{\\text{load}}}{N \\cdot \\eta} \\)\n- \\( T_{\\text{dec}} = T_{\\text{acc}} \\) (assuming symmetric acceleration and deceleration)\n- \\( T_{\\text{total}} = t_{\\text{acc}} + t_{\\text{const}} + t_{\\text{dec}} + t_{\\text{rest}} \\)\n\nSubstituting the given values:\n\n\\[\nT_{\\text{const}} = \\frac{1.5}{15 \\cdot 0.9} = 0.1111 \\, \\text{N*m}\n\\]\n\n\\[\nT_{\\text{total}} = 0.15 + 0.5 + 0.15 + 1.2 = 2.0 \\, \\text{s}\n\\]\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{1}{2.0} \\left( 0.13937^2 \\cdot 0.15 + 0.1111^2 \\cdot 0.5 + 0.13937^2 \\cdot 0.15 \\right)}\n\\]\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{1}{2.0} \\left( 0.00244 \\cdot 0.15 + 0.01234 \\cdot 0.5 + 0.00244 \\cdot 0.15 \\right)}\n\\]\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{1}{2.0} \\left( 0.000366 + 0.00617 + 0.000366 \\right)}\n\\]\n\n\\[\nT_{\\text{rms}} = \\sqrt{\\frac{1}{2.0} \\cdot 0.006902}\n\\]\n\n\\[\nT_{\\text{rms}} = \\sqrt{0.003451} = 0.05873 \\, \\text{N*m}\n\\]\n\n### Step 3: Ambient Temperature Derating Factor \\( k_{\\text{thermal}} \\)\n\nSince the operating ambient temperature is 25\u00b0C, which is the nominal temperature, the derating factor is 1.0.\n\n### Step 4: Derated Motor Continuous Torque Limit\n\nThe derated motor continuous torque limit is:\n\n\\[\nT_{\\text{derated}} = T_{\\text{nominal}} \\cdot k_{\\text{thermal}} = 0.15 \\cdot 1.0 = 0.15 \\, \\text{N*m}\n\\]\n\n### Step 5: Ideal Gear Ratio \\( N_{\\text{opt}} \\) for Maximum Inertia Matching\n\nThe optimal gear ratio for inertia matching is given by:\n\n\\[\nN_{\\text{opt}} = \\sqrt{\\frac{J_L}{J_m}}\n\\]\n\nSubstituting the given values:\n\n\\[\nN_{\\text{opt}} = \\sqrt{\\frac{0.002}{0.000008}} = \\sqrt{250} \\approx 15.81\n\\]\n\n### Step 6: Determination of Thermal Overload\n\nCompare the RMS torque with the derated continuous torque limit:\n\n- \\( T_{\\text{rms}} = 0.05873 \\, \\text{N*m} \\)\n- \\( T_{\\text{derated}} = 0.15 \\, \\text{N*m} \\)\n\nSince \\( T_{\\text{rms}} < T_{\\text{derated}} \\), the motor will not thermally overheat during continuous operation.\n\n### Final Results\n\n```json\n{\n  \"peak_torque\": 0.13937,\n  \"rms_torque\": 0.05873,\n  \"derating_factor\": 1.0,\n  \"derated_continuous_limit\": 0.15,\n  \"optimal_gear_ratio\": 15.81,\n  \"thermal_overload\": \"No\"\n}\n```"
+    },
+    {
+      "json_valid": true,
+      "score": 0.17,
+      "passed_all": false,
+      "metrics": {
+        "peak_torque": {
+          "expected": 0.3707,
+          "predicted": 2.933,
+          "rel_error": 6.9121,
+          "passed": false
+        },
+        "rms_torque": {
+          "expected": 0.1588,
+          "predicted": 3.82,
+          "rel_error": 23.0554,
+          "passed": false
+        },
+        "derating_factor": {
+          "expected": 0.7559,
+          "predicted": 0.571,
+          "rel_error": 0.2446,
+          "passed": false
+        },
+        "derated_continuous_limit": {
+          "expected": 0.2268,
+          "predicted": 0.171,
+          "rel_error": 0.246,
+          "passed": false
+        },
+        "optimal_gear_ratio": {
+          "expected": 25.82,
+          "predicted": 25.82,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "thermal_overload": {
+          "expected": false,
+          "predicted": true,
+          "passed": false
+        }
+      },
+      "task_id": "task_006_combined_multi_variable_edge_case",
+      "category": "combined_multi_variable",
+      "latency_sec": 7.61,
+      "raw_response": "To solve this problem, we need to calculate several parameters step-by-step. Let's go through each calculation:\n\n### Step 1: Required Peak Motor Shaft Torque\n\nThe peak motor shaft torque during acceleration can be calculated using the formula:\n\n\\[ T_{\\text{peak}} = \\left( J_L + \\frac{J_m}{N^2} \\right) \\cdot \\alpha \\cdot \\frac{1}{\\eta} \\]\n\nWhere:\n- \\( J_L = 0.020 \\, \\text{kg} \\cdot \\text{m}^2 \\)\n- \\( J_m = 0.000030 \\, \\text{kg} \\cdot \\text{m}^2 \\)\n- \\( N = 35.0 \\)\n- \\( \\alpha = 110.0 \\, \\text{rad/s}^2 \\)\n- \\( \\eta = 0.75 \\)\n\nSubstituting the values:\n\n\\[ T_{\\text{peak}} = \\left( 0.020 + \\frac{0.000030}{35.0^2} \\right) \\cdot 110.0 \\cdot \\frac{1}{0.75} \\]\n\n\\[ T_{\\text{peak}} = \\left( 0.020 + 0.00000002449 \\right) \\cdot 110.0 \\cdot \\frac{1}{0.75} \\]\n\n\\[ T_{\\text{peak}} = 0.02000002449 \\cdot 110.0 \\cdot \\frac{1}{0.75} \\]\n\n\\[ T_{\\text{peak}} = 2.933 \\, \\text{N*m} \\]\n\n### Step 2: Required Continuous RMS Motor Shaft Torque\n\nThe RMS torque is calculated over one complete cycle:\n\n\\[ T_{\\text{rms}} = \\sqrt{\\frac{1}{T} \\left( T_{\\text{acc}}^2 \\cdot t_{\\text{acc}} + T_{\\text{const}}^2 \\cdot t_{\\text{const}} + T_{\\text{dec}}^2 \\cdot t_{\\text{dec}} \\right)} \\]\n\nWhere:\n- \\( T = t_{\\text{acc}} + t_{\\text{const}} + t_{\\text{dec}} + t_{\\text{rest}} = 0.12 + 0.5 + 0.12 + 0.5 = 1.24 \\, \\text{s} \\)\n- \\( T_{\\text{acc}} = T_{\\text{peak}} = 2.933 \\, \\text{N*m} \\)\n- \\( T_{\\text{const}} = \\frac{T_{\\text{load}}}{\\eta} = \\frac{4.5}{0.75} = 6.0 \\, \\text{N*m} \\)\n- \\( T_{\\text{dec}} = 0 \\, \\text{N*m} \\) (assuming regenerative braking is not considered)\n\nSubstituting the values:\n\n\\[ T_{\\text{rms}} = \\sqrt{\\frac{1}{1.24} \\left( 2.933^2 \\cdot 0.12 + 6.0^2 \\cdot 0.5 + 0^2 \\cdot 0.12 \\right)} \\]\n\n\\[ T_{\\text{rms}} = \\sqrt{\\frac{1}{1.24} \\left( 0.103 + 18.0 \\right)} \\]\n\n\\[ T_{\\text{rms}} = \\sqrt{\\frac{18.103}{1.24}} \\]\n\n\\[ T_{\\text{rms}} = \\sqrt{14.60} \\]\n\n\\[ T_{\\text{rms}} = 3.82 \\, \\text{N*m} \\]\n\n### Step 3: Ambient Temperature Derating Factor \\( k_{\\text{thermal}} \\)\n\nThe derating factor is calculated using:\n\n\\[ k_{\\text{thermal}} = \\frac{T_{\\text{max}} - T_{\\text{ambient}}}{T_{\\text{max}} - T_{\\text{baseline}}} \\]\n\nWhere:\n- \\( T_{\\text{max}} = 130.0 \\, \\text{\u00b0C} \\)\n- \\( T_{\\text{ambient}} = 70.0 \\, \\text{\u00b0C} \\)\n- \\( T_{\\text{baseline}} = 25.0 \\, \\text{\u00b0C} \\)\n\nSubstituting the values:\n\n\\[ k_{\\text{thermal}} = \\frac{130.0 - 70.0}{130.0 - 25.0} \\]\n\n\\[ k_{\\text{thermal}} = \\frac{60.0}{105.0} \\]\n\n\\[ k_{\\text{thermal}} = 0.571 \\]\n\n### Step 4: Derated Motor Continuous Torque Limit\n\nThe derated continuous torque limit is:\n\n\\[ T_{\\text{derated}} = T_{\\text{nominal}} \\cdot k_{\\text{thermal}} \\]\n\nWhere:\n- \\( T_{\\text{nominal}} = 0.30 \\, \\text{N*m} \\)\n\nSubstituting the values:\n\n\\[ T_{\\text{derated}} = 0.30 \\cdot 0.571 \\]\n\n\\[ T_{\\text{derated}} = 0.171 \\, \\text{N*m} \\]\n\n### Step 5: Ideal Gear Ratio \\( N_{\\text{opt}} \\)\n\nThe optimal gear ratio for maximum inertia matching is:\n\n\\[ N_{\\text{opt}} = \\sqrt{\\frac{J_L}{J_m}} \\]\n\nSubstituting the values:\n\n\\[ N_{\\text{opt}} = \\sqrt{\\frac{0.020}{0.000030}} \\]\n\n\\[ N_{\\text{opt}} = \\sqrt{666.67} \\]\n\n\\[ N_{\\text{opt}} = 25.82 \\]\n\n### Step 6: Determination of Thermal Overload\n\nTo determine if the motor will thermally overheat, compare the RMS torque with the derated continuous torque limit:\n\n- \\( T_{\\text{rms}} = 3.82 \\, \\text{N*m} \\)\n- \\( T_{\\text{derated}} = 0.171 \\, \\text{N*m} \\)\n\nSince \\( T_{\\text{rms}} > T_{\\text{derated}} \\), the motor will thermally overheat.\n\n### Final JSON Output\n\n```json\n{\n  \"peak_torque\": 2.933,\n  \"rms_torque\": 3.82,\n  \"derating_factor\": 0.571,\n  \"derated_continuous_limit\": 0.171,\n  \"optimal_gear_ratio\": 25.82,\n  \"thermal_overload\": \"Yes\"\n}\n```"
+    }
+  ]
+}

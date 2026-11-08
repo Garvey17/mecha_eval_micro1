@@ -1,0 +1,285 @@
+{
+  "model": "o3",
+  "total_tasks": 6,
+  "passed_tasks": 2,
+  "pass_rate_pct": 33.33,
+  "avg_precision_score": 0.805,
+  "details": [
+    {
+      "json_valid": true,
+      "score": 0.5,
+      "passed_all": false,
+      "metrics": {
+        "peak_torque": {
+          "expected": 0.1941,
+          "predicted": 0.214,
+          "rel_error": 0.1025,
+          "passed": false
+        },
+        "rms_torque": {
+          "expected": 0.0551,
+          "predicted": 0.074,
+          "rel_error": 0.343,
+          "passed": false
+        },
+        "derating_factor": {
+          "expected": 1.0,
+          "predicted": 1.0,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "derated_continuous_limit": {
+          "expected": 0.25,
+          "predicted": 0.25,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "optimal_gear_ratio": {
+          "expected": 21.91,
+          "predicted": 24.0,
+          "rel_error": 0.0954,
+          "passed": false
+        },
+        "thermal_overload": {
+          "expected": false,
+          "predicted": false,
+          "passed": true
+        }
+      },
+      "task_id": "task_001_rotor_inertia_trap",
+      "category": "rotor_inertia",
+      "latency_sec": 15.43,
+      "raw_response": "```json\n{\n  \"peak_torque\": 0.214,\n  \"rms_torque\": 0.074,\n  \"derating_factor\": 1.0,\n  \"derated_continuous_limit\": 0.25,\n  \"optimal_gear_ratio\": 24.0,\n  \"thermal_overload\": \"No\"\n}\n```"
+    },
+    {
+      "json_valid": true,
+      "score": 1.0,
+      "passed_all": true,
+      "metrics": {
+        "peak_torque": {
+          "expected": 0.2939,
+          "predicted": 0.29,
+          "rel_error": 0.0133,
+          "passed": true
+        },
+        "rms_torque": {
+          "expected": 0.2022,
+          "predicted": 0.202,
+          "rel_error": 0.001,
+          "passed": true
+        },
+        "derating_factor": {
+          "expected": 1.0,
+          "predicted": 1.0,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "derated_continuous_limit": {
+          "expected": 0.19,
+          "predicted": 0.19,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "optimal_gear_ratio": {
+          "expected": 22.36,
+          "predicted": 22.4,
+          "rel_error": 0.0018,
+          "passed": true
+        },
+        "thermal_overload": {
+          "expected": true,
+          "predicted": true,
+          "passed": true
+        }
+      },
+      "task_id": "task_002_duty_cycle_thermal_stress",
+      "category": "rms_thermal_trap",
+      "latency_sec": 12.07,
+      "raw_response": "```json\n{\n  \"peak_torque\": 0.29,\n  \"rms_torque\": 0.202,\n  \"derating_factor\": 1.0,\n  \"derated_continuous_limit\": 0.19,\n  \"optimal_gear_ratio\": 22.4,\n  \"thermal_overload\": \"Yes\"\n}\n```"
+    },
+    {
+      "json_valid": true,
+      "score": 0.83,
+      "passed_all": false,
+      "metrics": {
+        "peak_torque": {
+          "expected": 0.25,
+          "predicted": 0.247,
+          "rel_error": 0.012,
+          "passed": true
+        },
+        "rms_torque": {
+          "expected": 0.1434,
+          "predicted": 0.154,
+          "rel_error": 0.0739,
+          "passed": false
+        },
+        "derating_factor": {
+          "expected": 0.7868,
+          "predicted": 0.787,
+          "rel_error": 0.0003,
+          "passed": true
+        },
+        "derated_continuous_limit": {
+          "expected": 0.1259,
+          "predicted": 0.127,
+          "rel_error": 0.0087,
+          "passed": true
+        },
+        "optimal_gear_ratio": {
+          "expected": 23.09,
+          "predicted": 23.1,
+          "rel_error": 0.0004,
+          "passed": true
+        },
+        "thermal_overload": {
+          "expected": true,
+          "predicted": true,
+          "passed": true
+        }
+      },
+      "task_id": "task_003_ambient_thermal_derating",
+      "category": "ambient_temp_trap",
+      "latency_sec": 13.32,
+      "raw_response": "```json\n{\n  \"peak_torque\": 0.247,\n  \"rms_torque\": 0.154,\n  \"derating_factor\": 0.787,\n  \"derated_continuous_limit\": 0.127,\n  \"optimal_gear_ratio\": 23.1,\n  \"thermal_overload\": \"Yes\"\n}\n```"
+    },
+    {
+      "json_valid": true,
+      "score": 1.0,
+      "passed_all": true,
+      "metrics": {
+        "peak_torque": {
+          "expected": 0.8306,
+          "predicted": 0.831,
+          "rel_error": 0.0005,
+          "passed": true
+        },
+        "rms_torque": {
+          "expected": 0.4116,
+          "predicted": 0.412,
+          "rel_error": 0.001,
+          "passed": true
+        },
+        "derating_factor": {
+          "expected": 1.0,
+          "predicted": 1.0,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "derated_continuous_limit": {
+          "expected": 0.4,
+          "predicted": 0.4,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "optimal_gear_ratio": {
+          "expected": 30.0,
+          "predicted": 30.0,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "thermal_overload": {
+          "expected": true,
+          "predicted": true,
+          "passed": true
+        }
+      },
+      "task_id": "task_004_optimal_inertia_matching",
+      "category": "inertia_mismatch",
+      "latency_sec": 17.44,
+      "raw_response": "Step-by-step calculations\n\n1.  Acceleration phase motor torque  \n   \u2022 Load-side inertia torque: T\u2097,acc = J_L\u00b7\u03b1 = 0.045 \u00b7 50 = 2.25 N\u00b7m  \n   \u2022 Total load-side torque:\u2003T\u2097,total = 5 + 2.25 = 7.25 N\u00b7m  \n   \u2022 Motor torque to drive load through gearbox:  \n     T_m,load = T\u2097,total /(\u03b7\u00b7N) = 7.25 /(0.90\u00b710) = 0.8056 N\u00b7m  \n   \u2022 Motor-rotor inertia torque:\u2003T_m,in = J_m\u00b7\u03b1_m = 0.00005\u00b7(10\u00b750) = 0.025 N\u00b7m  \n   \u2022 Peak motor torque:\u2003T_peak = 0.8056 + 0.025 \u2248 0.831 N\u00b7m  \n\n2.  Torques in each duty-cycle segment  \n   \u2500 Accel (0.2 s): 0.8306 N\u00b7m  \n   \u2500 Constant speed (0.6 s):  \n     T = 5 /(0.90\u00b710) = 0.5556 N\u00b7m  \n   \u2500 Decel (0.2 s):  \n     T\u2097,total = 5 - 2.25 = 2.75 N\u00b7m \u21d2 T_m,load = 2.75/9 = 0.3056 N\u00b7m  \n     T = 0.3056 - 0.025 = 0.2806 N\u00b7m (magnitude used for heating)  \n   \u2500 Dwell (1.0 s): 0 N\u00b7m  \n\n3.  Continuous RMS motor torque  \n   T_rms = \u221a[(0.8306\u00b2\u00b70.2 + 0.5556\u00b2\u00b70.6 + 0.2806\u00b2\u00b70.2) / 2.0]  \n          \u2248 \u221a0.16944 \u2248 0.412 N\u00b7m  \n\n4.  Ambient-temperature derating factor  \n   k_thermal = (T_max \u2013 T_amb) / (T_max \u2013 25 \u00b0C)  \n             = (130 \u2013 25)/(130 \u2013 25) = 1.0  \n\n5.  Derated continuous torque limit  \n   T_cont,derated = k_thermal \u00b7 T_nom = 1.0 \u00b7 0.40 = 0.40 N\u00b7m  \n\n6.  Optimum gear ratio for inertia matching  \n   N_opt = \u221a(J_L / J_m) = \u221a(0.045 / 0.00005) \u2248 30 : 1  \n\n7.  Thermal check  \n   Required T_rms (0.412 N\u00b7m) > Derated limit (0.40 N\u00b7m) \u21d2 motor will overheat.\n\nFinal results\n\n```json\n{\n  \"peak_torque\": 0.831,\n  \"rms_torque\": 0.412,\n  \"derating_factor\": 1.0,\n  \"derated_continuous_limit\": 0.40,\n  \"optimal_gear_ratio\": 30.0,\n  \"thermal_overload\": \"Yes\"\n}\n```"
+    },
+    {
+      "json_valid": true,
+      "score": 0.83,
+      "passed_all": false,
+      "metrics": {
+        "peak_torque": {
+          "expected": 0.1647,
+          "predicted": 0.162,
+          "rel_error": 0.0164,
+          "passed": true
+        },
+        "rms_torque": {
+          "expected": 0.0733,
+          "predicted": 0.073,
+          "rel_error": 0.0041,
+          "passed": true
+        },
+        "derating_factor": {
+          "expected": 1.0,
+          "predicted": 1.0,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "derated_continuous_limit": {
+          "expected": 0.15,
+          "predicted": 0.15,
+          "rel_error": 0.0,
+          "passed": true
+        },
+        "optimal_gear_ratio": {
+          "expected": 15.81,
+          "predicted": 16.7,
+          "rel_error": 0.0563,
+          "passed": false
+        },
+        "thermal_overload": {
+          "expected": false,
+          "predicted": false,
+          "passed": true
+        }
+      },
+      "task_id": "task_005_back_emf_voltage_limit",
+      "category": "electrical_voltage_saturation",
+      "latency_sec": 12.26,
+      "raw_response": "```json\n{\n  \"peak_torque\": 0.162,\n  \"rms_torque\": 0.073,\n  \"derating_factor\": 1.00,\n  \"derated_continuous_limit\": 0.150,\n  \"optimal_gear_ratio\": 16.7,\n  \"thermal_overload\": \"No\"\n}\n```"
+    },
+    {
+      "json_valid": true,
+      "score": 0.67,
+      "passed_all": false,
+      "metrics": {
+        "peak_torque": {
+          "expected": 0.3707,
+          "predicted": 0.35,
+          "rel_error": 0.0558,
+          "passed": false
+        },
+        "rms_torque": {
+          "expected": 0.1588,
+          "predicted": 0.189,
+          "rel_error": 0.1902,
+          "passed": false
+        },
+        "derating_factor": {
+          "expected": 0.7559,
+          "predicted": 0.756,
+          "rel_error": 0.0001,
+          "passed": true
+        },
+        "derated_continuous_limit": {
+          "expected": 0.2268,
+          "predicted": 0.227,
+          "rel_error": 0.0009,
+          "passed": true
+        },
+        "optimal_gear_ratio": {
+          "expected": 25.82,
+          "predicted": 25.8,
+          "rel_error": 0.0008,
+          "passed": true
+        },
+        "thermal_overload": {
+          "expected": false,
+          "predicted": false,
+          "passed": true
+        }
+      },
+      "task_id": "task_006_combined_multi_variable_edge_case",
+      "category": "combined_multi_variable",
+      "latency_sec": 17.49,
+      "raw_response": "```json\n{\n  \"peak_torque\": 0.350,\n  \"rms_torque\": 0.189,\n  \"derating_factor\": 0.756,\n  \"derated_continuous_limit\": 0.227,\n  \"optimal_gear_ratio\": 25.8,\n  \"thermal_overload\": \"No\"\n}\n```"
+    }
+  ]
+}
